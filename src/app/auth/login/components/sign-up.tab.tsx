@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import z from "zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { LoadingSwap } from "@/components/ui/loading-swap";
 import { PasswordInput } from "@/components/ui/password-input";
+import { authClient } from "@/lib/auth.client";
 
 const signUpSchema = z.object({
   name: z.string().min(1),
@@ -35,8 +37,35 @@ const SignUpTab = () => {
     },
   });
 
-  const onSubmit = (data: SignUpSchema) => {
-    console.log(data);
+  const onSubmit = async (data: SignUpSchema) => {
+    // 1. Server Action Way:
+    // await auth.api.signUpEmail({
+    //   headers: await headers(),
+    //   body: {
+    //     name: data.name,
+    //     email: data.email,
+    //     password: data.password,
+    //     callbackURL: "/",
+    //   },
+    // });
+    // 2. Client Side Way:
+    const response = await authClient.signUp.email(
+      {
+        ...data,
+        callbackURL: "/",
+      },
+      {
+        onSuccess: () => {
+          toast.success("Sign up successful");
+        },
+        onError: (error) => {
+          toast.error("Sign up failed", {
+            description: error.error.message,
+          });
+        },
+      },
+    );
+    console.log(response);
   };
 
   const { isSubmitting } = form.formState;

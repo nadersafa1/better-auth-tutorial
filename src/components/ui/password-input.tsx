@@ -1,28 +1,28 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { cn } from "@/lib/utils"
-import { EyeIcon, EyeOffIcon } from "lucide-react"
+import { zxcvbn, zxcvbnOptions } from "@zxcvbn-ts/core";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 import {
-  useState,
-  createContext,
-  useContext,
-  type ComponentProps,
-  type ReactNode,
   type ChangeEvent,
-  useEffect,
+  type ComponentProps,
+  createContext,
+  type ReactNode,
+  useContext,
   useDeferredValue,
+  useEffect,
   useMemo,
-} from "react"
-import { zxcvbn, zxcvbnOptions } from "@zxcvbn-ts/core"
+  useState,
+} from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 
-const PasswordInputContext = createContext<{ password: string } | null>(null)
+const PasswordInputContext = createContext<{ password: string } | null>(null);
 
 export function PasswordInput({
   className,
@@ -32,18 +32,18 @@ export function PasswordInput({
   defaultValue,
   ...props
 }: Omit<ComponentProps<typeof Input>, "type"> & {
-  children?: ReactNode
+  children?: ReactNode;
 }) {
-  const [showPassword, setShowPassword] = useState(false)
-  const [password, setPassword] = useState(defaultValue ?? "")
+  const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState(defaultValue ?? "");
 
-  const Icon = showPassword ? EyeOffIcon : EyeIcon
-  const currentValue = value ?? password
+  const Icon = showPassword ? EyeOffIcon : EyeIcon;
+  const currentValue = value ?? password;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value)
-    onChange?.(e)
-  }
+    setPassword(e.target.value);
+    onChange?.(e);
+  };
 
   return (
     <PasswordInputContext value={{ password: currentValue.toString() }}>
@@ -62,7 +62,7 @@ export function PasswordInput({
             size="icon"
             type="button"
             className="absolute inset-y-1/2 right-1 size-7 -translate-y-1/2"
-            onClick={() => setShowPassword(p => !p)}
+            onClick={() => setShowPassword((p) => !p)}
           >
             <Icon className="size-5" />
             <span className="sr-only">
@@ -73,22 +73,22 @@ export function PasswordInput({
         {children}
       </div>
     </PasswordInputContext>
-  )
+  );
 }
 
 export function PasswordInputStrengthChecker() {
-  const [optionsLoaded, setOptionsLoaded] = useState(false)
-  const [errorLoadingOptions, setErrorLoadingOptions] = useState(false)
+  const [optionsLoaded, setOptionsLoaded] = useState(false);
+  const [errorLoadingOptions, setErrorLoadingOptions] = useState(false);
 
-  const { password } = usePasswordInput()
-  const deferredPassword = useDeferredValue(password)
+  const { password } = usePasswordInput();
+  const deferredPassword = useDeferredValue(password);
   const strengthResult = useMemo(() => {
     if (!optionsLoaded || deferredPassword.length === 0) {
-      return { score: 0, feedback: { warning: undefined } } as const
+      return { score: 0, feedback: { warning: undefined } } as const;
     }
 
-    return zxcvbn(deferredPassword)
-  }, [optionsLoaded, deferredPassword])
+    return zxcvbn(deferredPassword);
+  }, [optionsLoaded, deferredPassword]);
 
   useEffect(() => {
     Promise.all([
@@ -104,35 +104,35 @@ export function PasswordInputStrengthChecker() {
             ...common.dictionary,
             ...english.dictionary,
           },
-        })
-        setOptionsLoaded(true)
+        });
+        setOptionsLoaded(true);
       })
-      .catch(() => setErrorLoadingOptions(true))
-  }, [])
+      .catch(() => setErrorLoadingOptions(true));
+  }, []);
 
   function getLabel() {
-    if (deferredPassword.length === 0) return "Password strength"
-    if (!optionsLoaded) return "Loading strength checker"
+    if (deferredPassword.length === 0) return "Password strength";
+    if (!optionsLoaded) return "Loading strength checker";
 
-    const score = strengthResult.score
+    const score = strengthResult.score;
     switch (score) {
       case 0:
       case 1:
-        return "Very weak"
+        return "Very weak";
       case 2:
-        return "Weak"
+        return "Weak";
       case 3:
-        return "Strong"
+        return "Strong";
       case 4:
-        return "Very strong"
+        return "Very strong";
       default:
-        throw new Error(`Invalid score: ${score satisfies never}`)
+        throw new Error(`Invalid score: ${score satisfies never}`);
     }
   }
 
-  const label = getLabel()
+  const label = getLabel();
 
-  if (errorLoadingOptions) return null
+  if (errorLoadingOptions) return null;
 
   return (
     <div className="space-y-0.5">
@@ -145,19 +145,19 @@ export function PasswordInputStrengthChecker() {
         aria-valuetext={label}
         className="flex gap-1"
       >
-        {Array.from({ length: 4 }).map((_, i) => {
+        {[0, 1, 2, 3].map((barIndex) => {
           const color =
-            strengthResult.score >= 3 ? "bg-primary" : "bg-destructive"
+            strengthResult.score >= 3 ? "bg-primary" : "bg-destructive";
 
           return (
             <div
-              key={i}
+              key={`strength-bar-${barIndex}`}
               className={cn(
                 "h-1 flex-1 rounded-full",
-                strengthResult.score > i ? color : "bg-secondary",
+                strengthResult.score > barIndex ? color : "bg-secondary",
               )}
             />
-          )
+          );
         })}
       </div>
       <div className="flex justify-end text-sm text-muted-foreground">
@@ -175,15 +175,15 @@ export function PasswordInputStrengthChecker() {
         )}
       </div>
     </div>
-  )
+  );
 }
 
 const usePasswordInput = () => {
-  const context = useContext(PasswordInputContext)
+  const context = useContext(PasswordInputContext);
   if (context == null) {
     throw new Error(
       "usePasswordInput must be used within a PasswordInputContext",
-    )
+    );
   }
-  return context
-}
+  return context;
+};
