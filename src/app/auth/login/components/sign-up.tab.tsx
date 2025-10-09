@@ -27,7 +27,11 @@ const signUpSchema = z.object({
 
 type SignUpSchema = z.infer<typeof signUpSchema>
 
-const SignUpTab = () => {
+const SignUpTab = ({
+	openEmailVerification
+}: {
+	openEmailVerification: (email: string) => void
+}) => {
 	const form = useForm<SignUpSchema>({
 		resolver: zodResolver(signUpSchema),
 		defaultValues: {
@@ -65,6 +69,11 @@ const SignUpTab = () => {
 				}
 			}
 		)
+
+		if (response.error == null && !response.data.user.emailVerified) {
+			openEmailVerification(data.email)
+		}
+
 		console.log(response)
 	}
 
