@@ -1,3 +1,66 @@
+# Release Notes - Better Auth Tutorial v0.2.0
+
+## 🚀 Version 0.2.0 - Email & Password Reset Features
+
+**Release Date:** 03 October 2025  
+**Version:** 0.2.0  
+**Type:** Feature Release
+
+---
+
+## ✨ New Features
+
+### 📧 Email Verification System
+- **Email Verification on Signup**: Automatic email verification required for new accounts
+- **Auto Sign-in After Verification**: Seamless user experience with automatic login after email verification
+- **Configurable Expiration**: 24-hour expiration for verification tokens
+- **Email Verification Tokens**: Secure token-based verification system
+
+### 🔐 Password Reset Functionality
+- **Forgot Password Component**: Integrated forgot password tab in login page
+- **Password Reset Email**: Automated password reset email sending with secure tokens
+- **Reset Password Page**: Dedicated page for password reset with token validation
+- **Enhanced Password Validation**: Regex-based password strength requirements
+  - Must contain uppercase letter, lowercase letter, number, and special character
+  - Minimum 8 characters with maximum 50 characters
+
+### 🎉 Welcome Email System
+- **Automated Welcome Emails**: Welcome emails sent automatically after successful signup
+- **Better Auth Hooks**: Integration with Better Auth's after signup hooks
+- **Email Action System**: Centralized email sending with Nodemailer integration
+
+### 📨 Email Infrastructure
+- **Centralized Email Actions**: Unified email sending system for all email types
+- **Three Email Types**: Verification, password reset, and welcome emails
+- **Template-based System**: Consistent email templates across all email types
+- **Nodemailer Integration**: Robust email delivery with configurable SMTP settings
+
+### 🔒 Enhanced Security
+- **Strong Password Requirements**: Comprehensive password validation with regex patterns
+- **Secure Token System**: Time-limited tokens for password reset and email verification
+- **Email-based Authentication**: Multi-step verification process for account security
+
+---
+
+## 🎯 Key Components Added
+
+### Authentication Flow Enhancements
+1. **Sign Up with Email Verification**: Users must verify email before account activation
+2. **Password Reset Flow**: Complete forgot password to reset password workflow
+3. **Welcome Email Integration**: Automatic welcome email after successful signup
+
+### New Pages & Components
+- **Reset Password Page**: `/auth/reset-password` with token validation
+- **Forgot Password Component**: Integrated tab in login page
+- **Email Action System**: Centralized email sending infrastructure
+
+### Email System Architecture
+- **Email Actions**: Modular email sending functions
+- **Template System**: Consistent email formatting
+- **Error Handling**: Comprehensive error handling for email operations
+
+---
+
 # Release Notes - Better Auth Tutorial v0.1.0
 
 ## 🎉 Initial Release
@@ -133,8 +196,6 @@ npm run dev
 ## 🔮 Future Enhancements
 
 - OAuth provider integration (Google, GitHub, etc.)
-- Email verification system
-- Password reset functionality
 - User profile management
 - Role-based access control
 - Multi-factor authentication
