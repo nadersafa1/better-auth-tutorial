@@ -2,6 +2,7 @@ import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { createAuthMiddleware } from 'better-auth/api'
 import { nextCookies } from 'better-auth/next-js'
+import { sendChangeEmailVerification } from '@/actions/emails/send-change-email-verification'
 import { sendPasswordResetEmail } from '@/actions/emails/send-password-reset-email'
 import { sendVerificationEmail } from '@/actions/emails/send-verification-email'
 import { sendWelcomeEmail } from '@/actions/emails/send-welcome-email'
@@ -9,6 +10,13 @@ import { db } from '@/drizzle/db'
 import * as schema from '@/drizzle/schema'
 
 export const auth = betterAuth({
+	user: {
+		changeEmail: {
+			enabled: true,
+			sendChangeEmailVerification: sendChangeEmailVerification
+		}
+	},
+
 	emailAndPassword: {
 		enabled: true,
 		minPasswordLength: 8,

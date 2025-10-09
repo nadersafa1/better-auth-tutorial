@@ -22,13 +22,18 @@ export default function Home() {
 				{session ? (
 					<>
 						<p>Welcome {session.user?.name}</p>
-						<Button
-							onClick={() => authClient.signOut()}
-							size='lg'
-							variant='destructive'
-						>
-							Logout
-						</Button>
+						<div className='flex gap-2 justify-center'>
+							<Button asChild={true}>
+								<Link href='/profile'>Profile</Link>
+							</Button>
+
+							<Button
+								onClick={() => authClient.signOut()}
+								variant='destructive'
+							>
+								Logout
+							</Button>
+						</div>
 					</>
 				) : (
 					<Button asChild={true} size='lg'>
