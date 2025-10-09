@@ -1,129 +1,129 @@
-"use client";
+'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import z from "zod";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import z from 'zod'
+import { Button } from '@/components/ui/button'
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { LoadingSwap } from "@/components/ui/loading-swap";
-import { PasswordInput } from "@/components/ui/password-input";
-import { authClient } from "@/lib/auth.client";
+	Form,
+	FormControl,
+	FormDescription,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { LoadingSwap } from '@/components/ui/loading-swap'
+import { PasswordInput } from '@/components/ui/password-input'
+import { authClient } from '@/lib/auth.client'
 
 const signUpSchema = z.object({
-  name: z.string().min(1),
-  email: z.email().min(1),
-  password: z.string().min(8),
-});
+	name: z.string().min(1),
+	email: z.email().min(1),
+	password: z.string().min(8)
+})
 
-type SignUpSchema = z.infer<typeof signUpSchema>;
+type SignUpSchema = z.infer<typeof signUpSchema>
 
 const SignUpTab = () => {
-  const form = useForm<SignUpSchema>({
-    resolver: zodResolver(signUpSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-    },
-  });
+	const form = useForm<SignUpSchema>({
+		resolver: zodResolver(signUpSchema),
+		defaultValues: {
+			name: '',
+			email: '',
+			password: ''
+		}
+	})
 
-  const onSubmit = async (data: SignUpSchema) => {
-    // 1. Server Action Way:
-    // await auth.api.signUpEmail({
-    //   headers: await headers(),
-    //   body: {
-    //     name: data.name,
-    //     email: data.email,
-    //     password: data.password,
-    //     callbackURL: "/",
-    //   },
-    // });
-    // 2. Client Side Way:
-    const response = await authClient.signUp.email(
-      {
-        ...data,
-        callbackURL: "/",
-      },
-      {
-        onSuccess: () => {
-          toast.success("Sign up successful");
-        },
-        onError: (error) => {
-          toast.error("Sign up failed", {
-            description: error.error.message,
-          });
-        },
-      },
-    );
-    console.log(response);
-  };
+	const onSubmit = async (data: SignUpSchema) => {
+		// 1. Server Action Way:
+		// await auth.api.signUpEmail({
+		//   headers: await headers(),
+		//   body: {
+		//     name: data.name,
+		//     email: data.email,
+		//     password: data.password,
+		//     callbackURL: "/",
+		//   },
+		// });
+		// 2. Client Side Way:
+		const response = await authClient.signUp.email(
+			{
+				...data,
+				callbackURL: '/'
+			},
+			{
+				onSuccess: () => {
+					toast.success('Sign up successful')
+				},
+				onError: error => {
+					toast.error('Sign up failed', {
+						description: error.error.message
+					})
+				}
+			}
+		)
+		console.log(response)
+	}
 
-  const { isSubmitting } = form.formState;
+	const { isSubmitting } = form.formState
 
-  return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input type="email" {...field} />
-              </FormControl>
-              <FormMessage />
-              <FormDescription>
-                We will never share your email with anyone else.
-              </FormDescription>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <PasswordInput {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" disabled={isSubmitting} className="w-full mt-2">
-          <LoadingSwap isLoading={isSubmitting}>Sign Up</LoadingSwap>
-        </Button>
-      </form>
-    </Form>
-  );
-};
+	return (
+		<Form {...form}>
+			<form className='space-y-4' onSubmit={form.handleSubmit(onSubmit)}>
+				<FormField
+					control={form.control}
+					name='name'
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Name</FormLabel>
+							<FormControl>
+								<Input {...field} />
+							</FormControl>
+							<FormMessage />
+							<FormDescription>
+								This is your public display name.
+							</FormDescription>
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name='email'
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Email</FormLabel>
+							<FormControl>
+								<Input type='email' {...field} />
+							</FormControl>
+							<FormMessage />
+							<FormDescription>
+								We will never share your email with anyone else.
+							</FormDescription>
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name='password'
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Password</FormLabel>
+							<FormControl>
+								<PasswordInput {...field} />
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<Button className='w-full mt-2' disabled={isSubmitting} type='submit'>
+					<LoadingSwap isLoading={isSubmitting}>Sign Up</LoadingSwap>
+				</Button>
+			</form>
+		</Form>
+	)
+}
 
-export default SignUpTab;
+export default SignUpTab
