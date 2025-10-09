@@ -19,7 +19,7 @@ export async function sendEmailAction({
 	subject: string
 	meta: {
 		description: string
-		link: string
+		link?: string
 	}
 }) {
 	const mailOptions = {
@@ -30,7 +30,7 @@ export async function sendEmailAction({
     <div style="${styles.container}">
       <h1 style="${styles.heading}">${subject}</h1>
       <p style="${styles.paragraph}">${meta.description}</p>
-      <a href="${meta.link}" style="${styles.link}">Click Here</a>
+			${meta.link ? `<a href="${meta.link}" style="${styles.link}">Click Here</a>` : ''}
     </div>
     `
 	}

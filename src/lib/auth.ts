@@ -1,8 +1,10 @@
 import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
+import { createAuthMiddleware } from 'better-auth/api'
 import { nextCookies } from 'better-auth/next-js'
 import { sendPasswordResetEmail } from '@/actions/emails/send-password-reset-email'
 import { sendVerificationEmail } from '@/actions/emails/send-verification-email'
+import { sendWelcomeEmail } from '@/actions/emails/send-welcome-email'
 import { db } from '@/drizzle/db'
 import * as schema from '@/drizzle/schema'
 
@@ -19,7 +21,7 @@ export const auth = betterAuth({
 		sendOnSignUp: true,
 		sendVerificationEmail: sendVerificationEmail
 	},
-	sessions: {
+	session: {
 		// cookieCache is used to enable caching of user sessions
 		cookieCache: {
 			enabled: true,
@@ -33,5 +35,18 @@ export const auth = betterAuth({
 	database: drizzleAdapter(db, {
 		provider: 'pg',
 		schema
-	})
+	}),
+	hooks: {
+		after: createAuthMiddleware(async ctx => {
+			if (ctx.path.startsWith('signup')) {
+				const user = ctx.context.newSession?.user ?? {
+					name: ctx.body.name,
+					email: ctx.body.email
+				}
+				if (user) {
+					await sendWelcomeEmail(user.email)
+				}
+			}
+		})
+	}
 })
