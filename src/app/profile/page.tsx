@@ -2,6 +2,7 @@ import {
 	ArrowLeftIcon,
 	Key,
 	LinkIcon,
+	Loader2Icon,
 	Shield,
 	Trash,
 	User,
@@ -11,10 +12,12 @@ import { headers } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
+import { Suspense } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { auth } from '@/lib/auth'
 import ProfileUpdateForm from './components/profile-update-form'
+import SecurityTab from './components/security-tab'
 
 const ProfilePage = async () => {
 	const session = await auth.api.getSession({
@@ -89,6 +92,12 @@ const ProfilePage = async () => {
 							</CardContent>
 						</Card>
 					</TabsContent>
+
+					<TabsContent value='security'>
+						<LoadingSuspense>
+							<SecurityTab email={session.user?.email} />
+						</LoadingSuspense>
+					</TabsContent>
 				</Tabs>
 			</div>
 		</div>
@@ -96,3 +105,11 @@ const ProfilePage = async () => {
 }
 
 export default ProfilePage
+
+const LoadingSuspense = ({ children }: { children: React.ReactNode }) => {
+	return (
+		<Suspense fallback={<Loader2Icon className='animate-spin size-20' />}>
+			{children}
+		</Suspense>
+	)
+}
