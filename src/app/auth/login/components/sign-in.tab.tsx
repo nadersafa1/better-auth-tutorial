@@ -27,9 +27,11 @@ const signInSchema = z.object({
 type SignInSchema = z.infer<typeof signInSchema>
 
 const SignInTab = ({
-	openEmailVerification
+	openEmailVerification,
+	openForgotPassword
 }: {
 	openEmailVerification: (email: string) => void
+	openForgotPassword: () => void
 }) => {
 	const form = useForm<SignInSchema>({
 		resolver: zodResolver(signInSchema),
@@ -99,7 +101,12 @@ const SignInTab = ({
 					name='password'
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Password</FormLabel>
+							<div className='flex justify-between'>
+								<FormLabel>Password</FormLabel>
+								<Button onClick={openForgotPassword} variant='link'>
+									forgot password?
+								</Button>
+							</div>
 							<FormControl>
 								<PasswordInput {...field} />
 							</FormControl>

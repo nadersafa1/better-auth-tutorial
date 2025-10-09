@@ -6,10 +6,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { authClient } from '@/lib/auth.client'
 import EmialVerification from './components/email-verification'
+import ForgotPasswordTab from './components/forgot-password'
 import SignInTab from './components/sign-in.tab'
 import SignUpTab from './components/sign-up.tab'
 
-type SelectedTab = 'signin' | 'signup' | 'email-verification'
+type SelectedTab =
+	| 'signin'
+	| 'signup'
+	| 'email-verification'
+	| 'forgot-password'
 
 const LoginPage = () => {
 	const [email, setEmail] = useState('')
@@ -30,6 +35,10 @@ const LoginPage = () => {
 		setSelectedTab('email-verification')
 	}
 
+	const openForgotPassword = () => {
+		setSelectedTab('forgot-password')
+	}
+
 	return (
 		<Tabs
 			className='max-auto w-full my-6 px-4'
@@ -48,7 +57,10 @@ const LoginPage = () => {
 						<CardTitle>Sign In</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<SignInTab openEmailVerification={openEmailVerification} />
+						<SignInTab
+							openEmailVerification={openEmailVerification}
+							openForgotPassword={openForgotPassword}
+						/>
 					</CardContent>
 				</Card>
 			</TabsContent>
@@ -69,6 +81,16 @@ const LoginPage = () => {
 					</CardHeader>
 					<CardContent>
 						<EmialVerification email={email} />
+					</CardContent>
+				</Card>
+			</TabsContent>
+			<TabsContent value='forgot-password'>
+				<Card>
+					<CardHeader className='text-2xl font-bold'>
+						<CardTitle>Forgot Password</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<ForgotPasswordTab openSignIn={() => setSelectedTab('signin')} />
 					</CardContent>
 				</Card>
 			</TabsContent>
