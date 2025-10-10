@@ -18,6 +18,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { auth } from '@/lib/auth'
 import ProfileUpdateForm from './components/profile-update-form'
 import SecurityTab from './components/security-tab'
+import SessionsTab from './components/sessions-tab'
 
 const ProfilePage = async () => {
 	const session = await auth.api.getSession({
@@ -96,6 +97,12 @@ const ProfilePage = async () => {
 					<TabsContent value='security'>
 						<LoadingSuspense>
 							<SecurityTab email={session.user?.email} />
+						</LoadingSuspense>
+					</TabsContent>
+
+					<TabsContent value='sessions'>
+						<LoadingSuspense>
+							<SessionsTab currentSessionToken={session.session?.token} />
 						</LoadingSuspense>
 					</TabsContent>
 				</Tabs>

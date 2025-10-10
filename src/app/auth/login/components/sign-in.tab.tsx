@@ -103,7 +103,11 @@ const SignInTab = ({
 						<FormItem>
 							<div className='flex justify-between'>
 								<FormLabel>Password</FormLabel>
-								<Button onClick={openForgotPassword} variant='link'>
+								<Button
+									onClick={openForgotPassword}
+									type='button'
+									variant='link'
+								>
 									forgot password?
 								</Button>
 							</div>
