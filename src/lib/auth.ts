@@ -16,7 +16,14 @@ export const auth = betterAuth({
 			sendChangeEmailVerification: sendChangeEmailVerification
 		}
 	},
-
+	socialProviders: {
+		google: {
+			enabled: true,
+			prompt: 'select_account',
+			clientId: process.env.GOOGLE_CLIENT_ID as string,
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
+		}
+	},
 	emailAndPassword: {
 		enabled: true,
 		minPasswordLength: 8,

@@ -2,13 +2,21 @@
 
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+	Card,
+	CardContent,
+	CardFooter,
+	CardHeader,
+	CardTitle
+} from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { authClient } from '@/lib/auth.client'
 import EmialVerification from './components/email-verification'
 import ForgotPasswordTab from './components/forgot-password'
 import SignInTab from './components/sign-in.tab'
 import SignUpTab from './components/sign-up.tab'
+import SocialAuthButtons from './components/social-auth-buttons'
 
 type SelectedTab =
 	| 'signin'
@@ -51,6 +59,7 @@ const LoginPage = () => {
 					<TabsTrigger value='signup'>Sign Up</TabsTrigger>
 				</TabsList>
 			)}
+
 			<TabsContent value='signin'>
 				<Card>
 					<CardHeader className='text-2xl font-bold'>
@@ -62,8 +71,13 @@ const LoginPage = () => {
 							openForgotPassword={openForgotPassword}
 						/>
 					</CardContent>
+					<Separator />
+					<CardFooter className='grid grid-cols-1 gap-3'>
+						<SocialAuthButtons />
+					</CardFooter>
 				</Card>
 			</TabsContent>
+
 			<TabsContent value='signup'>
 				<Card>
 					<CardHeader className='text-2xl font-bold'>
