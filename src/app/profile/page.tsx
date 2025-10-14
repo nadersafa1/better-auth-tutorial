@@ -19,6 +19,7 @@ import { auth } from '@/lib/auth'
 import ProfileUpdateForm from './components/profile-update-form'
 import SecurityTab from './components/security-tab'
 import SessionsTab from './components/sessions-tab'
+import LinkedAccountsTab from './components/linked-accounts-tab'
 
 const ProfilePage = async () => {
 	const session = await auth.api.getSession({
@@ -103,6 +104,12 @@ const ProfilePage = async () => {
 					<TabsContent value='sessions'>
 						<LoadingSuspense>
 							<SessionsTab currentSessionToken={session.session?.token} />
+						</LoadingSuspense>
+					</TabsContent>
+
+					<TabsContent value='accounts'>
+						<LoadingSuspense>
+							<LinkedAccountsTab />
 						</LoadingSuspense>
 					</TabsContent>
 				</Tabs>
