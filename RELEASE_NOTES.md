@@ -1,3 +1,134 @@
+# Release Notes - Better Auth Tutorial v0.4.0
+
+## 🚀 Version 0.4.0 - Two-Factor Authentication (2FA)
+
+**Release Date:** 17 October 2025  
+**Version:** 0.4.0  
+**Type:** Feature Release
+
+---
+
+## ✨ New Features
+
+### 🔐 Two-Factor Authentication Setup
+- **Enable/Disable 2FA**: Password-protected functionality to enable or disable 2FA
+- **QR Code Generation**: Automatic QR code generation for authenticator app setup
+- **TOTP URL Generation**: Easy scanning with TOTP URI format
+- **Backup Codes**: 10 emergency backup codes generated during setup
+- **Real-time Verification**: TOTP code verification during initial setup flow
+- **Password Protection**: All 2FA operations require password verification
+
+### 🔑 2FA Verification Flow
+- **Dedicated 2FA Page**: Clean verification interface at `/auth/2fa`
+- **Tabbed Interface**: Authenticator and Backup Code verification options
+- **6-digit TOTP Verification**: Standard authenticator app code verification
+- **Backup Code Recovery**: Emergency access using backup codes
+- **Seamless Redirect**: Automatic redirect to home after successful verification
+- **Mobile-Responsive UI**: Card-based layout optimized for all screen sizes
+
+### 🛡️ Security Enhancements
+- **TOTP Support**: Time-based one-time passwords with Better Auth integration
+- **Emergency Recovery**: Multiple backup codes for account recovery scenarios
+- **Password Verification**: Required for enabling/disabling 2FA features
+- **Form Validation**: Zod schemas for input validation and security
+- **User Feedback**: Toast notifications for all success and error states
+- **Secure Sessions**: Proper session handling post-2FA verification
+
+---
+
+## 🎯 Key Components Added
+
+### 2FA Authentication Flow
+1. **2FA Verification Page**: `/app/auth/2fa/page.tsx` - Server-side rendered page for 2FA verification during login
+2. **TOTP Form**: Authenticator app code verification with 6-digit validation
+3. **Backup Code Tab**: Emergency backup code verification form
+4. **QR Code Verify**: QR code display and verification flow for initial setup
+5. **Two-Factor Auth Management**: Enable/disable 2FA in profile security settings
+
+### Technical Implementation
+- **Better Auth Integration**: TOTP-based 2FA using Better Auth's built-in support
+- **QR Code Library**: react-qr-code for authenticator app QR generation
+- **Separation of Concerns**: 5 component files under 100 lines each for maintainability
+- **Form Management**: React Hook Form with Zod validation schemas
+- **Client Components**: Strategic use of client components for interactive 2FA features
+
+---
+
+# Release Notes - Better Auth Tutorial v0.3.0
+
+## 🚀 Version 0.3.0 - Profile Management System
+
+**Release Date:** 24 October 2025  
+**Version:** 0.3.0  
+**Type:** Feature Release
+
+---
+
+## ✨ New Features
+
+### 👤 Profile Management System
+- **Tabbed Interface**: Modern 5-tab layout (Profile, Security, Sessions, Accounts, Danger)
+- **Responsive Design**: Mobile-optimized tabs with icon-only view on small screens
+- **Protected Route**: Automatic redirect to login for unauthenticated users
+- **User Avatar Display**: Profile header with user image or fallback icon
+
+### 📝 Profile Update
+- **Name and Email Update**: Update user information with form validation
+- **Email Change Verification**: Secure email update flow requiring email verification
+- **React Hook Form Integration**: Form state management with Zod schema validation
+- **Success Feedback**: Toast notifications for successful updates
+
+### 🔐 Security Management
+- **Change Password**: Full password change functionality with current password verification
+- **Session Control**: Option to revoke other sessions when changing password
+- **Set Password for OAuth Users**: Password reset email for users who signed up via OAuth
+- **Dynamic UI**: Conditional rendering based on credential account presence
+
+### 🔑 Session Management
+- **Current Session Display**: Highlighted current session with badge
+- **Device Information**: Browser and OS detection using UAParser
+- **Individual Session Revocation**: Delete specific sessions with confirmation
+- **Bulk Session Management**: Revoke all other sessions with single action
+- **Session Details**: Created and expiration timestamps with device type icons
+
+### 🔗 Account Linking
+- **OAuth Provider Linking**: Connect multiple OAuth accounts (Google, GitHub, etc.)
+- **Account Unlinking**: Remove linked OAuth providers
+- **Linked Accounts Display**: View all connected accounts with link dates
+- **Provider Management**: List of available providers for connection
+
+### ⚠️ Account Deletion
+- **Email Verification Flow**: Secure deletion requiring email confirmation
+- **Confirmation Dialog**: "Are you sure?" prompt before deletion initiation
+- **Danger Zone UI**: Red-themed danger zone with destructive styling
+
+---
+
+## 🎯 Key Components Added
+
+### Profile Page
+1. **Main Profile Page**: `/app/profile/page.tsx` - Server-side rendered with session validation and tabbed navigation
+2. **Profile Update Form**: Update name and email with validation
+3. **Change Password Form**: Password change with option to revoke other sessions
+4. **Set Password Button**: Password reset email trigger for OAuth users
+5. **Session Card**: Individual session display with device info and revoke action
+6. **Sessions Management**: Session list with bulk revoke functionality
+7. **Account Card**: OAuth account card with link/unlink actions
+8. **Account Linking**: Account linking management interface
+9. **Account Deletion**: Account deletion button with confirmation
+
+### Email Actions
+- **Change Email Verification**: Email verification for email changes
+- **Delete Account Verification**: Confirmation email for account deletion
+
+### Technical Implementation
+- **Separation of Concerns**: 11 component files under 100 lines each for maintainability
+- **Server/Client Pattern**: Strategic use of server and client components
+- **UAParser Integration**: Device detection for session management
+- **Better Auth Integration**: Profile updates, password management, session control, account linking, and account deletion
+
+---
+
 # Release Notes - Better Auth Tutorial v0.2.0
 
 ## 🚀 Version 0.2.0 - Email & Password Reset Features
