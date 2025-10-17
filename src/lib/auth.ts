@@ -3,6 +3,7 @@ import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { createAuthMiddleware } from 'better-auth/api'
 import { nextCookies } from 'better-auth/next-js'
 import { sendChangeEmailVerification } from '@/actions/emails/send-change-email-verification'
+import { sendDeleteAccountVerification } from '@/actions/emails/send-delete-account-verification'
 import { sendPasswordResetEmail } from '@/actions/emails/send-password-reset-email'
 import { sendVerificationEmail } from '@/actions/emails/send-verification-email'
 import { sendWelcomeEmail } from '@/actions/emails/send-welcome-email'
@@ -14,6 +15,10 @@ export const auth = betterAuth({
 		changeEmail: {
 			enabled: true,
 			sendChangeEmailVerification: sendChangeEmailVerification
+		},
+		deleteUser: {
+			enabled: true,
+			sendDeleteAccountVerification: sendDeleteAccountVerification
 		}
 	},
 	socialProviders: {

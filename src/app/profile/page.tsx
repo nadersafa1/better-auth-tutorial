@@ -13,13 +13,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { auth } from '@/lib/auth'
+import AccountDeletion from './components/account-deletion'
+import LinkedAccountsTab from './components/linked-accounts-tab'
 import ProfileUpdateForm from './components/profile-update-form'
 import SecurityTab from './components/security-tab'
 import SessionsTab from './components/sessions-tab'
-import LinkedAccountsTab from './components/linked-accounts-tab'
 
 const ProfilePage = async () => {
 	const session = await auth.api.getSession({
@@ -111,6 +112,19 @@ const ProfilePage = async () => {
 						<LoadingSuspense>
 							<LinkedAccountsTab />
 						</LoadingSuspense>
+					</TabsContent>
+
+					<TabsContent value='danger'>
+						<Card className='border border-destructive'>
+							<CardHeader>
+								<CardTitle className='text-destructive'>Danger Zone</CardTitle>
+							</CardHeader>
+							<CardContent>
+								<LoadingSuspense>
+									<AccountDeletion />
+								</LoadingSuspense>
+							</CardContent>
+						</Card>
 					</TabsContent>
 				</Tabs>
 			</div>
