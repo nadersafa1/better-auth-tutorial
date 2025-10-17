@@ -1,3 +1,59 @@
+# Release Notes - Better Auth Tutorial v0.4.0
+
+## 🚀 Version 0.4.0 - Two-Factor Authentication (2FA)
+
+**Release Date:** 17 October 2025  
+**Version:** 0.4.0  
+**Type:** Feature Release
+
+---
+
+## ✨ New Features
+
+### 🔐 Two-Factor Authentication Setup
+- **Enable/Disable 2FA**: Password-protected functionality to enable or disable 2FA
+- **QR Code Generation**: Automatic QR code generation for authenticator app setup
+- **TOTP URL Generation**: Easy scanning with TOTP URI format
+- **Backup Codes**: 10 emergency backup codes generated during setup
+- **Real-time Verification**: TOTP code verification during initial setup flow
+- **Password Protection**: All 2FA operations require password verification
+
+### 🔑 2FA Verification Flow
+- **Dedicated 2FA Page**: Clean verification interface at `/auth/2fa`
+- **Tabbed Interface**: Authenticator and Backup Code verification options
+- **6-digit TOTP Verification**: Standard authenticator app code verification
+- **Backup Code Recovery**: Emergency access using backup codes
+- **Seamless Redirect**: Automatic redirect to home after successful verification
+- **Mobile-Responsive UI**: Card-based layout optimized for all screen sizes
+
+### 🛡️ Security Enhancements
+- **TOTP Support**: Time-based one-time passwords with Better Auth integration
+- **Emergency Recovery**: Multiple backup codes for account recovery scenarios
+- **Password Verification**: Required for enabling/disabling 2FA features
+- **Form Validation**: Zod schemas for input validation and security
+- **User Feedback**: Toast notifications for all success and error states
+- **Secure Sessions**: Proper session handling post-2FA verification
+
+---
+
+## 🎯 Key Components Added
+
+### 2FA Authentication Flow
+1. **2FA Verification Page**: `/app/auth/2fa/page.tsx` - Server-side rendered page for 2FA verification during login
+2. **TOTP Form**: Authenticator app code verification with 6-digit validation
+3. **Backup Code Tab**: Emergency backup code verification form
+4. **QR Code Verify**: QR code display and verification flow for initial setup
+5. **Two-Factor Auth Management**: Enable/disable 2FA in profile security settings
+
+### Technical Implementation
+- **Better Auth Integration**: TOTP-based 2FA using Better Auth's built-in support
+- **QR Code Library**: react-qr-code for authenticator app QR generation
+- **Separation of Concerns**: 5 component files under 100 lines each for maintainability
+- **Form Management**: React Hook Form with Zod validation schemas
+- **Client Components**: Strategic use of client components for interactive 2FA features
+
+---
+
 # Release Notes - Better Auth Tutorial v0.3.0
 
 ## 🚀 Version 0.3.0 - Profile Management System
