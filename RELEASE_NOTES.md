@@ -1,3 +1,58 @@
+# Release Notes - Better Auth Tutorial v0.5.0
+
+## 🚀 Version 0.5.0 - Passkey (Passwordless Authentication)
+
+**Release Date:** 17 October 2025  
+**Version:** 0.5.0  
+**Type:** Feature Release
+
+---
+
+## ✨ New Features
+
+### 🔑 Passwordless Login with Passkeys
+- **Passkey Button**: Quick passwordless authentication on sign-in page
+- **Autofill Support**: Seamless passkey login experience with browser autofill
+- **WebAuthn Integration**: Secure biometric authentication using WebAuthn standard
+- **Automatic Redirect**: Seamless redirect to home after successful passkey login
+- **Fallback Option**: Traditional email/password login remains available
+
+### 🗝️ Passkey Management
+- **Add Passkeys**: Create new passkeys with custom names/descriptions
+- **Delete Passkeys**: Remove existing passkeys from your account
+- **View Passkeys**: Display all registered passkeys with creation dates
+- **Dialog Interface**: Modal-based UI for adding new passkeys
+- **Empty State**: Helpful guidance for users without passkeys
+- **Card Display**: Clean card-based layout for passkey information
+
+### 🛡️ Security Features
+- **WebAuthn Authentication**: Device biometrics for passwordless security
+- **Device Type Detection**: Display device type information for each passkey
+- **Backup Indication**: Shows if passkey is backed up to cloud
+- **Credential Management**: Secure storage of credential IDs and public keys
+- **Form Validation**: Zod schemas for input validation
+- **User Feedback**: Toast notifications for success and error states
+
+---
+
+## 🎯 Key Components Added
+
+### Passkey Authentication Flow
+1. **Passkey Login Button**: `/app/auth/login/_components/passkey-button.tsx` - Passwordless sign-in with autofill support
+2. **Passkey Management**: `/app/profile/_components/pass-keys/pass-key-management.tsx` - Add, view, and delete passkeys
+3. **Security Tab Integration**: Passkey section added to profile security settings
+4. **Database Schema**: Passkey table with WebAuthn credentials
+
+### Technical Implementation
+- **Better Auth Integration**: Passkey plugin with WebAuthn support
+- **Database Schema**: PostgreSQL table for passkey storage with credential data
+- **Separation of Concerns**: Component files under 100 lines each for maintainability
+- **Form Management**: React Hook Form with Zod validation schemas
+- **Dialog UI**: Modal interface for adding new passkeys
+- **Client Components**: Strategic use of client components for interactive features
+
+---
+
 # Release Notes - Better Auth Tutorial v0.4.0
 
 ## 🚀 Version 0.4.0 - Two-Factor Authentication (2FA)

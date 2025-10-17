@@ -11,6 +11,7 @@ import { auth } from '@/lib/auth'
 import TwoFactorAuth from './2FA/two-factor-auth'
 import ChangePasswordForm from './change-password-form'
 import SetPasswordButton from './set-password-button'
+import PassKeyManagement from './pass-keys/pass-key-management'
 
 const SecurityTab = async ({
 	email,
@@ -19,10 +20,14 @@ const SecurityTab = async ({
 	email: string
 	isTwoFactorEnabled: boolean
 }) => {
-
-	const accounts = await auth.api.listUserAccounts({
-		headers: await headers()
-	})
+	const [passKeys, accounts] = await Promise.all([
+		auth.api.listPasskeys({
+			headers: await headers()
+		}),
+		auth.api.listUserAccounts({
+			headers: await headers()
+		})
+	])
 
 	const hasPasswordAccount = accounts?.some(
 		account => account.providerId === 'credential'
@@ -67,7 +72,14 @@ const SecurityTab = async ({
 					</CardContent>
 				</Card>
 			)}
-
+			<Card>
+				<CardHeader>
+					<CardTitle>Passkeys</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<PassKeyManagement passKeys={passKeys} />
+				</CardContent>
+			</Card>
 		</div>
 	)
 }
