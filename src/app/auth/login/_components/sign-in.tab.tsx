@@ -59,9 +59,6 @@ const SignInTab = ({
 				callbackURL: '/'
 			},
 			{
-				onSuccess: () => {
-					toast.success('Sign in successful')
-				},
 				onError: error => {
 					if (error.error.code === 'EMAIL_NOT_VERIFIED') {
 						openEmailVerification(data.email)

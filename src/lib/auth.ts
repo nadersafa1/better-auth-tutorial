@@ -2,6 +2,7 @@ import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { createAuthMiddleware } from 'better-auth/api'
 import { nextCookies } from 'better-auth/next-js'
+import { twoFactor } from 'better-auth/plugins/two-factor'
 import { sendChangeEmailVerification } from '@/actions/emails/send-change-email-verification'
 import { sendDeleteAccountVerification } from '@/actions/emails/send-delete-account-verification'
 import { sendPasswordResetEmail } from '@/actions/emails/send-password-reset-email'
@@ -50,7 +51,8 @@ export const auth = betterAuth({
 	},
 	plugins: [
 		// nextCookies makes sure that the application knows how to set cookies inside of next js on server side. so its required for nextjs
-		nextCookies()
+		nextCookies(),
+		twoFactor()
 	],
 	database: drizzleAdapter(db, {
 		provider: 'pg',

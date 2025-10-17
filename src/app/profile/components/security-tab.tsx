@@ -1,4 +1,5 @@
 import { headers } from 'next/headers'
+import { Badge } from '@/components/ui/badge'
 import {
 	Card,
 	CardContent,
@@ -7,10 +8,17 @@ import {
 	CardTitle
 } from '@/components/ui/card'
 import { auth } from '@/lib/auth'
+import TwoFactorAuth from './2FA/two-factor-auth'
 import ChangePasswordForm from './change-password-form'
 import SetPasswordButton from './set-password-button'
 
-const SecurityTab = async ({ email }: { email: string }) => {
+const SecurityTab = async ({
+	email,
+	isTwoFactorEnabled
+}: {
+	email: string
+	isTwoFactorEnabled: boolean
+}) => {
 	const accounts = await auth.api.listUserAccounts({
 		headers: await headers()
 	})
@@ -42,6 +50,19 @@ const SecurityTab = async ({ email }: { email: string }) => {
 					</CardHeader>
 					<CardContent>
 						<SetPasswordButton email={email} />
+					</CardContent>
+				</Card>
+			)}
+			{hasPasswordAccount && (
+				<Card>
+					<CardHeader className='flex items-center justify-between gap-2'>
+						<CardTitle>Two-Factor Authentication</CardTitle>
+						<Badge variant={isTwoFactorEnabled ? 'default' : 'secondary'}>
+							{isTwoFactorEnabled ? 'Enabled' : 'Disabled'}
+						</Badge>
+					</CardHeader>
+					<CardContent>
+						<TwoFactorAuth isEnabled={isTwoFactorEnabled} />
 					</CardContent>
 				</Card>
 			)}

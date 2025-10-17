@@ -21,9 +21,6 @@ const SocialAuthButtons = () => {
 							callbackURL: '/'
 						},
 						{
-							onSuccess: () => {
-								toast.success('Sign in successful')
-							},
 							onError: error => {
 								toast.error('Sign in failed', {
 									description: error.error.message
