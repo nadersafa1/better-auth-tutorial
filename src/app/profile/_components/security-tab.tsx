@@ -19,6 +19,7 @@ const SecurityTab = async ({
 	email: string
 	isTwoFactorEnabled: boolean
 }) => {
+
 	const accounts = await auth.api.listUserAccounts({
 		headers: await headers()
 	})
@@ -66,6 +67,7 @@ const SecurityTab = async ({
 					</CardContent>
 				</Card>
 			)}
+
 		</div>
 	)
 }
