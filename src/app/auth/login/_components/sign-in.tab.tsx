@@ -18,6 +18,7 @@ import { Input } from '@/components/ui/input'
 import { LoadingSwap } from '@/components/ui/loading-swap'
 import { PasswordInput } from '@/components/ui/password-input'
 import { authClient } from '@/lib/auth.client'
+import PassKeyButton from './passkey-button'
 
 const signInSchema = z.object({
 	email: z.email().min(1),
@@ -75,51 +76,61 @@ const SignInTab = ({
 	const { isSubmitting } = form.formState
 
 	return (
-		<Form {...form}>
-			<form className='space-y-4' onSubmit={form.handleSubmit(onSubmit)}>
-				<FormField
-					control={form.control}
-					name='email'
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Email</FormLabel>
-							<FormControl>
-								<Input type='email' {...field} />
-							</FormControl>
-							<FormMessage />
-							<FormDescription>
-								We will never share your email with anyone else.
-							</FormDescription>
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name='password'
-					render={({ field }) => (
-						<FormItem>
-							<div className='flex justify-between'>
-								<FormLabel>Password</FormLabel>
-								<Button
-									onClick={openForgotPassword}
-									type='button'
-									variant='link'
-								>
-									forgot password?
-								</Button>
-							</div>
-							<FormControl>
-								<PasswordInput {...field} />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<Button className='w-full mt-2' disabled={isSubmitting} type='submit'>
-					<LoadingSwap isLoading={isSubmitting}>Sign In</LoadingSwap>
-				</Button>
-			</form>
-		</Form>
+		<div className='space-y-4'>
+			<Form {...form}>
+				<form className='space-y-4' onSubmit={form.handleSubmit(onSubmit)}>
+					<FormField
+						control={form.control}
+						name='email'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Email</FormLabel>
+								<FormControl>
+									<Input
+										autoComplete='email webauthn'
+										type='email'
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+								<FormDescription>
+									We will never share your email with anyone else.
+								</FormDescription>
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name='password'
+						render={({ field }) => (
+							<FormItem>
+								<div className='flex justify-between'>
+									<FormLabel>Password</FormLabel>
+									<Button
+										onClick={openForgotPassword}
+										type='button'
+										variant='link'
+									>
+										forgot password?
+									</Button>
+								</div>
+								<FormControl>
+									<PasswordInput
+										autoComplete='current-password webauthn'
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<Button className='w-full mt-2' disabled={isSubmitting} type='submit'>
+						<LoadingSwap isLoading={isSubmitting}>Sign In</LoadingSwap>
+					</Button>
+				</form>
+			</Form>
+			<PassKeyButton />
+		</div>
 	)
 }
 
