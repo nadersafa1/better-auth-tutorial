@@ -16,11 +16,11 @@ import { Suspense } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { auth } from '@/lib/auth'
-import AccountDeletion from './components/account-deletion'
-import LinkedAccountsTab from './components/linked-accounts-tab'
-import ProfileUpdateForm from './components/profile-update-form'
-import SecurityTab from './components/security-tab'
-import SessionsTab from './components/sessions-tab'
+import AccountDeletion from './_components/account-deletion'
+import LinkedAccountsTab from './_components/linked-accounts-tab'
+import ProfileUpdateForm from './_components/profile-update-form'
+import SecurityTab from './_components/security-tab'
+import SessionsTab from './_components/sessions-tab'
 
 const ProfilePage = async () => {
 	const session = await auth.api.getSession({

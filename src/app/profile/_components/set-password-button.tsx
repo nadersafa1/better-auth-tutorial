@@ -25,7 +25,7 @@ const SetPasswordButton = ({ email }: { email: string }) => {
 
 	return (
 		<Button onClick={handleSendPasswordResetEmail} variant='outline'>
-			SendPasswordResetEmail
+			Send Password Reset Email
 		</Button>
 	)
 }

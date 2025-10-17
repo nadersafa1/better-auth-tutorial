@@ -12,11 +12,11 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { authClient } from '@/lib/auth.client'
-import EmialVerification from './components/email-verification'
-import ForgotPasswordTab from './components/forgot-password'
-import SignInTab from './components/sign-in.tab'
-import SignUpTab from './components/sign-up.tab'
-import SocialAuthButtons from './components/social-auth-buttons'
+import EmialVerification from './_components/email-verification'
+import ForgotPasswordTab from './_components/forgot-password'
+import SignInTab from './_components/sign-in.tab'
+import SignUpTab from './_components/sign-up.tab'
+import SocialAuthButtons from './_components/social-auth-buttons'
 
 type SelectedTab =
 	| 'signin'
