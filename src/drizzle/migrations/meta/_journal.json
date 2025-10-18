@@ -15,6 +15,13 @@
       "when": 1760665625208,
       "tag": "0001_purple_raza",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1760743343847,
+      "tag": "0002_omniscient_stark_industries",
+      "breakpoints": true
     }
   ]
 }
