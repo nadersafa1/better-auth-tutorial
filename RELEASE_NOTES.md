@@ -1,3 +1,72 @@
+# Release Notes - Better Auth Tutorial v0.6.0
+
+## 🚀 Version 0.6.0 - Admin Panel & User Management
+
+**Release Date:** 17 October 2025  
+**Version:** 0.6.0  
+**Type:** Feature Release
+
+---
+
+## ✨ New Features
+
+### 👥 Admin Dashboard
+- **Dedicated Admin Page**: Clean admin interface at `/admin` with user list
+- **Permission-Based Access**: Automatic redirect for unauthorized users
+- **User Count Display**: Total user count shown in header
+- **Table Layout**: Organized table with user information columns
+- **Pagination Support**: Handle large user lists with limit of 100 users
+- **Navigation**: Back to home link for easy navigation
+
+### 🔧 User Management
+- **User Information**: View complete user details (name, email, role, creation date)
+- **Ban/Unban Users**: Ban users with reason and expiration tracking
+- **Delete Users**: Remove users with confirmation dialog
+- **Session Management**: Revoke all user sessions remotely
+- **Status Badges**: Visual indicators for banned, unverified, and current user
+- **Role Display**: Role badges with visual distinction (admin/user)
+- **Actions Dropdown**: Comprehensive actions menu per user row
+
+### 👤 User Impersonation
+- **Impersonate Users**: Log in as any user (except yourself) for testing and support
+- **Impersonation Indicator**: Fixed bottom-left button to stop impersonating
+- **Automatic Redirect**: Seamless redirect after starting impersonation
+- **Return to Admin**: Navigate back to admin page after stopping impersonation
+- **Session Tracking**: Track impersonated sessions in database
+
+### 🛡️ Role & Permission System
+- **Role-Based Access Control**: User and admin roles with distinct permissions
+- **Default Role Assignment**: New users assigned default role automatically
+- **Permission Checking**: user:list permission required for admin access
+- **Admin Badge Display**: Visual distinction for admin role
+- **Conditional UI**: Dynamic UI rendering based on user permissions
+- **Admin Link**: Conditional admin access link on home page for authorized users
+
+---
+
+## 🎯 Key Components Added
+
+### Admin Interface
+1. **Admin Page**: `/app/admin/page.tsx` - Main admin dashboard with user list and permission checks
+2. **User Row Component**: `/app/admin/_components/user-row.tsx` - User table row with actions dropdown
+3. **Impersonation Indicator**: `/components/auth/impersonation-indicator.tsx` - Fixed indicator to stop impersonation
+4. **Admin Link**: Conditional admin access link on home page
+
+### Database Schema Updates
+- **Role Field**: User role assignment (admin/user)
+- **Ban System**: Banned status, ban reason, and ban expiration fields
+- **Session Tracking**: Impersonated_by field for session tracking
+
+### Technical Implementation
+- **Better Auth Integration**: Admin plugin with default role configuration
+- **Admin Client**: Client-side admin plugin for user management actions
+- **Permission Checks**: Server and client-side permission validation
+- **Separation of Concerns**: Component files under 100 lines each for maintainability
+- **Alert Dialogs**: Confirmation dialogs for destructive actions
+- **Toast Notifications**: Success and error feedback for all actions
+
+---
+
 # Release Notes - Better Auth Tutorial v0.5.0
 
 ## 🚀 Version 0.5.0 - Passkey (Passwordless Authentication)

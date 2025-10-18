@@ -1,11 +1,22 @@
 'use client'
 
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { authClient } from '@/lib/auth.client'
 
 export default function Home() {
 	const { data: session, isPending: loading } = authClient.useSession()
+
+	const [isAdmin, setIsAdmin] = useState(false)
+
+	useEffect(() => {
+		authClient.admin
+			.hasPermission({ permission: { user: ['list'] } })
+			.then(({ data }) => {
+				setIsAdmin(data?.success ?? false)
+			})
+	}, [])
 
 	if (loading) {
 		return <p> Loading... </p>
@@ -26,7 +37,11 @@ export default function Home() {
 							<Button asChild={true}>
 								<Link href='/profile'>Profile</Link>
 							</Button>
-
+							{isAdmin && (
+								<Button asChild={true}>
+									<Link href='/admin'>Admin</Link>
+								</Button>
+							)}
 							<Button
 								onClick={() => authClient.signOut()}
 								variant='destructive'
