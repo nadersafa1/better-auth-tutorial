@@ -17,7 +17,7 @@ export const sendOrganizationInvitationEmail = async ({
 		to: email,
 		subject: 'Organization Invitation',
 		meta: {
-			description: `You have been invited to join ${organization.name} by ${inviter.name}. Click the link below to accept the invitation`,
+			description: `You have been invited to join ${organization.name} by ${inviter.name} as ${invitation.role}. Click the link below to accept the invitation`,
 			link: `${process.env.BETTER_AUTH_URL}/organizations/invites/${invitation.id}`,
 			linkText: 'Accept Invitation'
 		}

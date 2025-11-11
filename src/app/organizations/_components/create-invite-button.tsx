@@ -37,7 +37,7 @@ import { authClient } from '@/lib/auth.client'
 
 const createInviteSchema = z.object({
 	email: z.email().min(1).trim(),
-	role: z.enum(['admin', 'member']).default('member').optional()
+	role: z.enum(['admin', 'member', 'coach', 'player']).default('member').optional()
 })
 
 type CreateInviteSchema = z.infer<typeof createInviteSchema>
@@ -119,6 +119,8 @@ const CreateInviteButton = () => {
 										<SelectContent>
 											<SelectItem value='admin'>Admin</SelectItem>
 											<SelectItem value='member'>Member</SelectItem>
+											<SelectItem value='coach'>Coach</SelectItem>
+											<SelectItem value='player'>Player</SelectItem>
 										</SelectContent>
 									</Select>
 									<FormMessage />

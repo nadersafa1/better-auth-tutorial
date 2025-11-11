@@ -1,3 +1,4 @@
+import { ac, admin, coach, member, owner, player } from '@/components/auth/permissions'
 import {
 	adminClient,
 	organizationClient,
@@ -15,6 +16,15 @@ export const authClient = createAuthClient({
 		}),
 		passkeyClient(),
 		adminClient(),
-		organizationClient()
+		organizationClient(
+			{ac,
+			roles: {
+				  admin,
+					owner,
+					coach,
+					player,
+					member
+			}}
+		)
 	]
 }) // did not add a base url because client and server are on the same URL;

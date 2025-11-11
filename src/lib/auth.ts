@@ -2,7 +2,7 @@ import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { createAuthMiddleware } from 'better-auth/api'
 import { nextCookies } from 'better-auth/next-js'
-import { admin, organization } from 'better-auth/plugins'
+import {  admin as adminPlugin, organization } from 'better-auth/plugins'
 import { passkey } from 'better-auth/plugins/passkey'
 import { twoFactor } from 'better-auth/plugins/two-factor'
 import { desc, eq } from 'drizzle-orm'
@@ -14,6 +14,7 @@ import { sendVerificationEmail } from '@/actions/emails/send-verification-email'
 import { sendWelcomeEmail } from '@/actions/emails/send-welcome-email'
 import { db } from '@/drizzle/db'
 import * as schema from '@/drizzle/schema'
+import { ac, admin, coach, member, owner, player } from '@/components/auth/permissions'
 
 export const auth = betterAuth({
 	appName: 'Better Auth Tutorial',
@@ -59,8 +60,21 @@ export const auth = betterAuth({
 		nextCookies(),
 		twoFactor(),
 		passkey(),
-		admin({ defaultRole: 'user' }),
-		organization({
+		adminPlugin({ defaultRole: 'user' }),
+		organization({ac,
+			roles:{
+				owner,
+				coach,
+				player,
+				admin,
+				member
+			},
+			
+			allowUserToCreateOrganization:false,
+			creatorRole:'owner',
+			cancelPendingInvitationsOnReInvite:true,
+			disableOrganizationDeletion:true,
+			organizationLimit:1,
 			sendInvitationEmail: async ({
 				email,
 				organization,
