@@ -2,11 +2,13 @@ import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { createAuthMiddleware } from 'better-auth/api'
 import { nextCookies } from 'better-auth/next-js'
-import { admin } from 'better-auth/plugins'
+import { admin, organization } from 'better-auth/plugins'
 import { passkey } from 'better-auth/plugins/passkey'
 import { twoFactor } from 'better-auth/plugins/two-factor'
+import { desc, eq } from 'drizzle-orm'
 import { sendChangeEmailVerification } from '@/actions/emails/send-change-email-verification'
 import { sendDeleteAccountVerification } from '@/actions/emails/send-delete-account-verification'
+import { sendOrganizationInvitationEmail } from '@/actions/emails/send-organization-invitation-email'
 import { sendPasswordResetEmail } from '@/actions/emails/send-password-reset-email'
 import { sendVerificationEmail } from '@/actions/emails/send-verification-email'
 import { sendWelcomeEmail } from '@/actions/emails/send-welcome-email'
@@ -14,6 +16,7 @@ import { db } from '@/drizzle/db'
 import * as schema from '@/drizzle/schema'
 
 export const auth = betterAuth({
+	appName: 'Better Auth Tutorial',
 	user: {
 		changeEmail: {
 			enabled: true,
@@ -56,7 +59,22 @@ export const auth = betterAuth({
 		nextCookies(),
 		twoFactor(),
 		passkey(),
-		admin({ defaultRole: 'user' })
+		admin({ defaultRole: 'user' }),
+		organization({
+			sendInvitationEmail: async ({
+				email,
+				organization,
+				inviter,
+				invitation
+			}) => {
+				await sendOrganizationInvitationEmail({
+					email,
+					organization,
+					inviter: inviter.user,
+					invitation
+				})
+			}
+		})
 	],
 	database: drizzleAdapter(db, {
 		provider: 'pg',
@@ -74,5 +92,25 @@ export const auth = betterAuth({
 				}
 			}
 		})
+	},
+	databaseHooks: {
+		session: {
+			create: {
+				before: async userSession => {
+					const membership = await db.query.member.findFirst({
+						where: eq(schema.member.userId, userSession.userId),
+						orderBy: desc(schema.member.createdAt),
+						columns: { organizationId: true }
+					})
+
+					return {
+						data: {
+							...userSession,
+							activeOrganizationId: membership?.organizationId ?? null
+						}
+					}
+				}
+			}
+		}
 	}
 })

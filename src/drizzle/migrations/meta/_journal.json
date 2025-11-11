@@ -22,6 +22,13 @@
       "when": 1760743343847,
       "tag": "0002_omniscient_stark_industries",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1760790502072,
+      "tag": "0003_fantastic_jubilee",
+      "breakpoints": true
     }
   ]
 }

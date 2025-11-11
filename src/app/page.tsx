@@ -37,6 +37,9 @@ export default function Home() {
 							<Button asChild={true}>
 								<Link href='/profile'>Profile</Link>
 							</Button>
+							<Button asChild={true}>
+								<Link href='/organizations'>Organizations</Link>
+							</Button>
 							{isAdmin && (
 								<Button asChild={true}>
 									<Link href='/admin'>Admin</Link>

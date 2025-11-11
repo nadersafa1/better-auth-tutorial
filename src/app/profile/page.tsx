@@ -13,6 +13,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
+import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { auth } from '@/lib/auth'
@@ -57,7 +58,7 @@ const ProfilePage = async () => {
 								{session.user?.name ?? 'User Profile'}
 							</h1>
 							{/* TODO: Add Role Badge */}
-							{/* <Badge>{session.user?.role}</Badge> */}
+							<Badge>{session.user?.role}</Badge>
 							<p className='text-sm text-muted-foreground'>
 								{session.user?.email}
 							</p>
